@@ -1,0 +1,6 @@
+Pool,Product,UPB,GWAM,Age,H2H Refi,PLU,Counterparty,Price,Settle,UPB Variance,GWAM Variance,Age Variance,PLU Variance
+AR65486,Annual,"2,000,000",2.78,76,20%,48%,Brean,110.15,6/4/2016,10%,3 bps,5 Years,3%
+AR65488,Annual,"2,000,000",2.82,76,20%,45%,Nomura,111.15,6/12/2016,10%,5 bps,2 Years,3%
+AR65487,Annual,"2,000,000",2.85,75,15%,54%,KGS,109.38,7/17/2016,10%,5 bps,5 Years,3%
+AR75487,Monthly,"3,000,000",2.85,68,9%,60%,BAML,108.76,6/12/2016,10%,2 bps,5 Years,3%
+AM3842,Fixed,"2,000,000",4.95,70,9%,85%,BAML,115.635,6/15/2016,10%,5 bps,5 Years,3%

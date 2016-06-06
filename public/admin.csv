@@ -1,0 +1,35 @@
+Key,Value
+Annual HPA,0.00%
+Sale Based Claim Loss Severity,3%
+Appraisal Based Claim Loss Severity,20%
+Sale Based Claim Probability,80%
+Appraisal Based Claim Probability,20%
+Sale Based Claim Timeline (Mos),6
+Appraisal Based Claim Timeline (Mos),12
+Max Borrower Age,104
+Discount Rate,12%
+Tail Gain Scaler,100%
+Cash Reserve Requirement,1.00%
+Monthly Servicing Exp,15
+MSR Age,12
+Repair Set Aside Limit (Mos),6
+Warehouse COF,3.00%
+Annual Curve,IntexAnnual
+Monthly Curve,IntexMonthly
+Prepay,Prepay
+Partial Prepay,Partial Prepay Vector
+Use Partial Prepay,FALSE
+Draw,Draw
+Modeled Months,500
+Tie to Intex?,TRUE
+Draw Tuner,100%
+Prepay Tuner,100%
+Spread,0.85%
+Fixed Type,IIO
+Annual MIP,2.23%
+G fee,0.06%
+Draw Curve Basis,MCA
+Tape Spread,TRUE
+Monthly Spread,0.45%
+Annual Spread,0.35%
+Fixed Spread,0.41%

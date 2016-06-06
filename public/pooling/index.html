@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" ng-app="hecmModel">
+  <head>
+    <meta charset="utf-8">
+    <title>My HTML File</title>
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="libraries/bootstrap.css">
+    <!-- Organization based on https://calendee.com/2013/12/29/angularjs-code-organization/ -->
+    <script src="libraries/jquery.js"></script>
+    <script type="text/javascript" src="libraries/bootstrap.js"></script>
+    <script src="libraries/papaparse.js"></script>
+    <script src="libraries/jstat.min.js"></script>
+    <script src="libraries/angular.js"></script>
+    <script src="js/directives/mainDirective.js"></script>
+    
+    
+    <script src="pooling/index.js"></script>
+    <!-- <script type="js/angular-csv-import"></script> -->
+    <script type="text/javascript" src="js/uploadLoans.js"></script>
+    <script type="text/javascript" src="js/curves.js"></script>
+    <script type="text/javascript" src="pooling/js/trades.js"></script>
+    <script type="text/javascript" src="pooling/js/pooling.js"></script>
+    <script type="text/javascript" src="js/price.js"></script>
+  </head>
+  <body ng-controller="MainCtrl">
+    <nav class="navbar navbar-default">
+      <ul class="nav nav-pills">
+        <li role="presentation" ><a href="#"></a></li>
+        <li role="presentation" ><a href="#" ng-click="displayUpload()">Upload Loans</a></li>
+        <li role="presentation" ><a href="#">Use existing Loans</a></li>
+        <li role="presentation" ng-show="showLoans" ng-click="viewLoanInfo()"><a href="#">View Loan Info</a></li>
+        <li role="presentation" ng-show="showTrades" ng-click="viewTrades()"><a href="#">Current Trades</a></li>
+      </ul>
+    </nav>
+    <div class="container container-table" ng-show="showUpload">
+      <div class="row vertical-center-row">
+        <div class="text-center col-md-4 col-md-offset-4" >
+          <span class="btn btn-default btn-file">
+            {{inputFileDisplay}} <input type="file" onchange="angular.element(this).scope().modal()">
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="container" ng-show="loanTable">
+      <span ng-show="loanDetails">
+        <select name="mySelect" id="mySelect"
+          ng-options="option.name for option in data.availableOptions track by option.id"
+          ng-model="data.selectedOption"
+          ng-change="pageLimitUpdate()"
+          ></select><a href="" ng-click="previousPage()" class="spacer">Previous</a><tt>Page: {{currentPage + 1 }} of
+          {{pageLimit}}</tt><a href="" ng-click="nextPage()" class="spacer">Next</a>
+        </span>
+        
+        <button type="button" class="btn btn-primary pull-right spacer2" ng-click="allocate()">Allocate</button>
+        
+        
+      <table class="table center-table" ng-show="loanDetails">
+          <thead >
+            <tr >
+              <th class="thcenter" ng-repeat="n in loanInfo.fields | filter: {include: true}" ><h6>{{n.field}}</h6></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="i in loanInfo.results.rows|limitTo:data.selectedOption.id:currentPage * data.selectedOption.id">
+              <!--  <td ng-repeat="(key,val)  in i"><h6 >{{val  }}</h6></td> -->
+              <td>{{i['Loan Number']}}</td>
+              <td>{{i['Funded Date'] | date : 'MM/dd/yyyy'}}</td>
+              <td>{{i['Initial Rate'] | percentage:2}}</td>
+              <td>{{i['Youngest DOB'] | date : 'MM/dd/yyyy'}}</td>
+              <td>{{i['Program'] | date : 'MM/dd/yyyy'}}</td>
+              <td>{{i['Rate / Margin'] | percentage:3}}</td>
+              <td>{{i['MCA'] | currency:"$":0}}</td>
+              <td>{{i['UPB'] | currency:"$":0}}</td>
+              <td>{{i['Principal Limit'] | currency:"$":0}}</td>
+              <td>{{i['Payment Plan'] }}</td>
+              <td>{{i['Monthly Payment']| currency:"$":0}}</td>
+              <td>{{i['Term Length (Mos)']}}</td>
+              <td>{{i['Repair Set Aside']| currency:"$":0}}</td>
+              <td><input type="checkbox" ng-model="i['Ready to Pool']"></td>
+             
+              
+            </tr>
+            
+          </tbody>
+        </table>
+        </div>
+        <div class="container" ng-show="tradeTable">
+          
+          <button type="button" class="btn btn-primary pull-right spacer2"  ng-click="allocate()">Allocate</button>
+          
+          
+          <table class="table center-table" >
+            <thead >
+              <tr >
+                <th class="thcenter" ng-repeat="m in trades.fields " ng-if="m.indexOf('Variance')==-1"><h6>{{m}}</h6></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="z in trades.data">
+              <td><input type="checkbox" ng-model="z['fill']"></td>
+              <td>{{z['pool']}}</td>
+              <td>{{z['product']}}</td>
+              <td>{{z['UPB'] | currency:"$":0}}</td>
+              <td>{{z['WAM'] | percentage:3 }}</td>
+              <td>{{z['age']}}</td>
+              <td>{{z['refi'] | percentage:2}}</td>
+              <td>{{z['PLU'] | percentage:2}}</td>
+              <td>{{z['counterParty']}}</td>
+              <td>{{z['price']}}</td>
+               <td>{{z['settle']  | date : 'MM/dd/yyyy'}}</td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+
+        <div class="modal js-loading-bar">
+          <div class="modal-dialog">
+            <div class="modal-content text-center">
+              Loading....
+              <div class="modal-body">
+                <div class="progress progress-popup">
+                  <div class="progress-bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+      </body>
+    </html>
