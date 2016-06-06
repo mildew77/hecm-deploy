@@ -1,5 +1,5 @@
 {
-  "name"         : "HECM Deploy",
+  "name"         : "hecm-deploy",
   "version"      : "0.0.0",
   "description"  : "HECM pricing",
   "main"         : "server.js",
