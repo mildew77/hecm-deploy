@@ -1,0 +1,60 @@
+html, body, .container-table {
+    height: 50%;
+}
+.container-table {
+    display: table;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.progress-bar.animate {
+   width: 100%;
+}
+
+
+.table table,
+    thead,
+    tr,
+    tbody,
+    
+    td {
+        text-align: center;
+    }
+
+.spacer{
+    margin:10px;
+}
+.spacer2{
+    margin-left:20px;
+    margin-right:20px;
+}
+.statsTable{
+    text-align: left;
+}
+.thcenter{
+  
+    text-align: center; important!
+
+}

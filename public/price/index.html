@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" ng-app="hecmModel">
+  <head>
+    <meta charset="utf-8">
+    <title>My HTML File</title>
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="libraries/bootstrap.css">
+    <!-- Organization based on https://calendee.com/2013/12/29/angularjs-code-organization/ -->
+    <script src="libraries/jquery.js"></script>
+    <script type="text/javascript" src="libraries/bootstrap.js"></script>
+    <script src="libraries/papaparse.js"></script>
+    <script src="libraries/angular.js"></script>
+    <script src="js/directives/mainDirective.js"></script>
+    
+   
+    <script src="price/index.js"></script>
+    <!-- <script type="js/angular-csv-import"></script> -->
+      <script type="text/javascript" src="js/filters.js"></script>
+    <script type="text/javascript" src="js/uploadLoans.js"></script>
+      <script type="text/javascript" src="js/curves.js"></script>
+      <script type="text/javascript" src="js/price.js"></script>
+       <script type="text/javascript" src="js/admin.js"></script>
+       <script type="text/javascript" src="js/lesa.js"></script>
+          <script type="text/javascript" src="js/talc.js"></script>
+           <script type="text/javascript" src="js/servicing.js"></script>
+             <script type="text/javascript" src="js/exportCSV.js"></script>
+  </head>
+  <body ng-controller="MainCtrl">
+
+
+    <nav class="navbar navbar-default">
+      <ul class="nav nav-pills">
+        <li role="presentation" ><a href="#"></a></li>
+        <li role="presentation" ><a href="#" ng-click="displayUpload()">Upload Loans</a></li>
+        <li role="presentation" ><a href="#">Use existing Loans</a></li>
+        <li role="presentation" ng-show="showLoans" ng-click="viewLoanInfo()"><a href="#">View Loan Info</a></li> 
+        <li role="presentation" ng-show="showStats" ng-click="stats()"><a href="">Stats</a></li>   
+      </ul>
+    </nav>
+
+
+
+    <div class="container container-table" ng-show="showUpload">
+      <div class="row vertical-center-row">
+        <div class="text-center col-md-4 col-md-offset-4" >
+          <span class="btn btn-default btn-file">
+            {{inputFileDisplay}} <input type="file" onchange="angular.element(this).scope().modal()">
+          </span>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="container" ng-show="loanTable">
+
+
+        <span ng-show="loanDetails"> 
+         <select name="mySelect" id="mySelect"
+            ng-options="option.name for option in data.availableOptions track by option.id"
+            ng-model="data.selectedOption"
+            ng-change="pageLimitUpdate()"
+            ></select><a href="" ng-click="previousPage()" class="spacer">Previous</a><tt>Page: {{currentPage + 1 }} of
+            {{pageLimit}}</tt><a href="" ng-click="nextPage()" class="spacer">Next</a>     
+            </span>
+
+         
+            <button type="button" class="btn btn-primary pull-right spacer2" ng-click="price()">Price</button> 
+            <button type="button" class="btn btn-primary pull-right spacer2" ng-show="download" ng-click="downloadFile()">Download</button> 
+     
+
+   
+
+       
+        <table class="table statsTable" ng-show="loanStats" >
+       <thead>
+         <tr>
+           <th class="thcenter"><a href="">Product Type</a></th>
+           <th class="thcenter"><a href="">UPB</a></th>
+           <th class="thcenter"><a href="">Rate/Margin</a> </th>
+           <th class="thcenter"><a href="">Youngest Borrower Age</a></th>
+           <th class="thcenter"><a href="">PLU</a></th>
+           <th ng-show="PriceWAL"class="thcenter"><a href="">Price</a></th>
+           <th ng-show="PriceWAL"class="thcenter"><a href="">WAL</a></th>
+         </tr>
+       </thead>
+         <tbody>
+           <tr ng-repeat="l in statsContainer.programs track by $index">
+             <td >{{l}}</td>
+              <td>{{statsContainer.UPB[$index] | currency:"$":2}}</td>
+               <td>{{statsContainer.SumProductRate[$index] / statsContainer.UPB[$index]   | percentage:3}}</td>
+               <td>{{statsContainer.SumProductAge[$index] / statsContainer.UPB[$index] | number :2 }}</td>
+                <td>{{statsContainer.WeightedPLU[$index] / statsContainer.UPB[$index] | percentage:2}}</td>
+                <td ng-show="PriceWAL">{{statsContainer.Price[$index] / statsContainer.UPB[$index] | percentage:2}}</td>
+                <td ng-show="PriceWAL">{{statsContainer.WAL[$index] / statsContainer.UPB[$index] | number:3}}</td>
+           </tr>
+         </tbody>
+       </table>
+
+
+  
+     
+
+
+
+
+
+          
+ 
+        
+        
+        
+        <table class="table center-table" ng-show="loanDetails">
+          <thead >
+             <tr >
+              <th ng-click="sortFields($event)" class="thcenter" ng-repeat="n in loanInfo.fields | filter: {include: true}" ><a href="">{{n.field}}</a></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="i in loans| limitTo:data.selectedOption.id:currentPage * data.selectedOption.id">
+              <!--  <td ng-repeat="(key,val)  in i"><h6 >{{val  }}</h6></td> -->
+              <td ng-repeat="q in headerInclusion " >{{i[q] | picker:headerFormat[$index] }}</td>
+          
+              
+            </tr>
+            
+          </tbody>
+        </table>
+
+
+      </div>
+      <div class="modal js-loading-bar">
+        <div class="modal-dialog">
+          <div class="modal-content text-center">
+            Loading....
+            <div class="modal-body">
+              <div class="progress progress-popup">
+                <div class="progress-bar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+    </body>
+  </html>
